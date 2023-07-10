@@ -26,6 +26,7 @@
         padding: 3px;
       }
     </style>
+    <script language="JavaScript" type="text/javascript" src="script.js" defer></script>
 
 
   </head>
@@ -46,94 +47,6 @@
       <p class="lastResult"></p>
       <p class="lowOrHi"></p>
     </div>
-    <script>
-      //variables used 
-
-      let randomNumber = Math.floor(Math.random() * 100) + 1; /*Math.floor() rounds up to the lowest whole int| Math.random() generatws pseudo random number from 0 to 1*/
-      //references to output DOM elements
-      const guesses = document.querySelector(".guesses");
-      const lastResult = document.querySelector(".lastResult");
-      const lowOrHi = document.querySelector(".lowOrHi");
-      //uset input var
-      const guessSubmit = document.querySelector(".guessSubmit");
-      const guessField = document.querySelector(".guessField");
-      let resetButton;
-      //var for turn count
-      let guessCount = 1;
-
-      //functions
-      guessField.focus();
-      function checkGuess(){
-        // creating a local cons 
-        const userGuess = Number(guessField.value); //Number is a build in constractor checks if a value is a number dah
-        // on the first turn we are initiating the count field 
-        if (guessCount === 1) {
-          guesses.textContent = "Previous guesses: ";
-        }
-        //guesses display 
-        guesses.textContent += `${userGuess} `;
-
-        if (userGuess === randomNumber) { //game won
-          lastResult.textContent = "Congratulations! You got it right!";
-          lastResult.style.backgroundColor ="green";
-          lowOrHi.textContent = "";
-          setGameOver();
-        } else if (guessCount ===10) { //game lost
-          lastResult.textContent = "!!!Game Over!!!";
-          lowOrHi.textContent = "";
-          setGameOver();
-        } else { //game keeps going
-          lastResult.textContent = "Wrong!";
-          lastResult.style.backgroundColor = "red";
-            if (userGuess < randomNumber) { /* checks if guess is lower*/
-              lowOrHi.textContent = "Last guess was too low!";
-            } else if(userGuess > randomNumber){
-              lowOrHi.textContent = "last guess was too high";
-            } /*Checks if the guess is higher. I think I should be save here by doing just else with no test*/
-            
-          
-        }
-        guessCount++; //increases turn  count num 
-        guessField.value=""; //resets previous guess
-        guessField.focus(); //pointing cursor back to the form?
-      }
-
-      //game over function
-      function setGameOver(){
-        //form disabling on game over
-        guessField.disabled = true;
-        guessSubmit.disabled = true;
-        //generating a reset button
-        resetButton = document.createElement("button");
-        resetButton.textContent = "Start new game";
-        document.body.append(resetButton);
-        //reset function call
-        resetButton.addEventListener("click", resetGame);
-      }
-
-
-      //reset game function  (my simple soul would just refreash the page XD)
-      function resetGame(){
-        //game count reset
-        guessCount = 1;
-        //for loop reseting paragraphs
-        const resetParas = document.querySelectorAll(".resultParas p");
-        for (const resetPara of resetParas) {
-          resetPara.textContent ="";
-        }
-        //remove reset button sneaky selector I would like to remember 
-        resetButton.parentNode.removeChild(resetButton);
-        //undo ehat has been done 
-        guessField.disabled = false;
-        guessSubmit.disabled = false;
-        guessField.value ="";
-        guessField.focus();
-        lastResult.style.backgroundColor = "white";
-        //generates new pseudorandom so you do not guess the same one again 
-        randomNumber = Math.floor(Math.random()*100) + 1;
-      }
-      guessSubmit.addEventListener("click", checkGuess); //no need to specify () inside an eventListener 
-
-    </script>
+   <!--test-->
   </body>
 </html>
